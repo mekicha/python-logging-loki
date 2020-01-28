@@ -13,7 +13,7 @@ from typing import Optional
 from typing import Tuple
 
 import requests
-import rfc3339
+
 
 from logging_loki import const
 
@@ -114,7 +114,7 @@ class LokiEmitterV0(LokiEmitter):
     def build_payload(self, record: logging.LogRecord, line) -> dict:
         """Build JSON payload with a log entry."""
         labels = self.build_labels(record)
-        ts = rfc3339.format_microsecond(record.created)
+        ts = record.created.isoformat()
         stream = {
             "labels": labels,
             "entries": [{"ts": ts, "line": line}],
